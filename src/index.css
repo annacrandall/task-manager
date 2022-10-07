@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.font-1{
+    font-family: 'Rokkitt', serif;
+}
