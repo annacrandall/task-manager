@@ -1,36 +1,60 @@
-import react, { useState } from "react"; 
-import TaskList from "./components/TasksList";
+import { useState } from "react";
+import Button from "./components/Button";
 
-const TaskManager = ()  => {
-  const [userInput, setUserInput] = useState("")
-  
-  const handleText = (event) => {
-      setUserInput(event.target.value)
-  }
+const TaskManager = () => {
+  const [Tasks, setTasks] = useState([]);
+  const [customTask, setCustomTask] = useState("");
 
-  const handleTextSubmit = (event) => {
-    event.preventDefault();
-    addTask(userInput);
-    setUserInput("");
+  const deleteTask = () => {
+    
   }
 
   const addTask = () => {
-    
-  }
+    const id = Tasks.length === 0 ? 1 : Tasks.length + 1;
+    const taskDetail = {
+      id: id,
+      task: customTask,
+      complete: false,
+      key: id,
+    };
+    setTasks((oldList) => [...oldList, taskDetail]);
+    console.log(taskDetail);
+  };
 
   return (
     <div id="viewport-container" className="font-1 m-2 p-1">
       <h1 className="flex justify-center text-2xl">Task Manager</h1>
+
       <div className="border-2 border-slate-600">
-        <input value={userInput} type="text" onChange={handleText} placeholder="Input task..." className="border-2 border-slate-600 m-2 p-1" />
-        <button type="submit" onClick={handleTextSubmit}
-        className="border-2 border-slate-600 m-2 p-1">Submit</button>
-       </div>
-      <TaskList />
-      
-      
+        <input
+          type="text"
+          placeholder="Add an item..."
+          task={customTask}
+          onChange={(e) => setCustomTask(e.target.value)}
+        />
+
+        <Button onClick={addTask} name="Save task" />
+      </div>
+
+      <div>
+        <div className="border-2 border-slate-600 grid grid-cols-1 ">
+          <h1>Need to complete:</h1>
+
+          <ul>
+            {Tasks.map((taskDetail) => {
+              return (
+                <div key={taskDetail.id}>
+                  <li>{taskDetail.task}
+                <Button onClick={deleteTask} name="Delete" />
+                  </li>
+                </div>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default TaskManager;
