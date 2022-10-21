@@ -2,24 +2,28 @@ import { useState } from "react";
 import Button from "./components/Button";
 
 const TaskManager = () => {
-  const [Tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [customTask, setCustomTask] = useState("");
 
-  const deleteTask = () => {
-    
-  }
-
+  
   const addTask = () => {
-    const id = Tasks.length === 0 ? 1 : Tasks.length + 1;
     const taskDetail = {
-      id: id,
+      id: tasks.length === 0 ? 1 : tasks.length + 1,
       task: customTask,
       complete: false,
-      key: id,
+      key: tasks.length === 0 ? 1 : tasks.length + 1,
     };
-    setTasks((oldList) => [...oldList, taskDetail]);
-    console.log(taskDetail);
+    setCustomTask("")
+    setTasks((oldList) => [...oldList, taskDetail])
   };
+  
+  const deleteTask = (idToDelete) =>{
+    const newArray = tasks.filter((tasks) => {
+      return tasks.id !== idToDelete
+    }); 
+    setTasks(newArray)
+  }
+ 
 
   return (
     <div id="viewport-container" className="font-1 m-2 p-1">
@@ -32,7 +36,6 @@ const TaskManager = () => {
           task={customTask}
           onChange={(e) => setCustomTask(e.target.value)}
         />
-
         <Button onClick={addTask} name="Save task" />
       </div>
 
@@ -41,11 +44,16 @@ const TaskManager = () => {
           <h1>Need to complete:</h1>
 
           <ul>
-            {Tasks.map((taskDetail) => {
+            {tasks.map((taskDetail) => {
               return (
-                <div key={taskDetail.id}>
-                  <li>{taskDetail.task}
-                <Button onClick={deleteTask} name="Delete" />
+                <div key={taskDetail.id} id="task-container">
+                  <li>
+                    {taskDetail.task}
+                    <Button
+                      onClick={() => deleteTask(taskDetail.id)}
+                      name="Delete"
+                      className="m-1 p-1"
+                    />
                   </li>
                 </div>
               );
