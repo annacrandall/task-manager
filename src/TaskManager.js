@@ -27,7 +27,7 @@ const TaskManager = () => {
     setTasks(newArray)
   }
 
-  const createTaskUrgency = () => {
+  const createTaskUrgency = (event) => {
     
   }
  
@@ -53,10 +53,9 @@ const TaskManager = () => {
         /> 
         <div id="task-urgency" className="flex flex-row">
           <h3 className="m-1 p-1">Set task urgency: </h3>
-          <Button name="Low"
-          className="bg-green"/> 
-          <Button name="Medium"/>
-          <Button name="High"/> 
+          <button id="low-urgency"className="text-white bg-green-600 opacity-50 p-1 m-1 rounded text-lg">Low</button>
+         <button id="medium-urgency" className="text-white bg-amber-600 p-1 opacity-50 m-1 rounded text-lg">Medium</button>
+         <button id="high-urgency" className="text-white bg-red-600 p-1 rounded opacity-50 m-1 text-lg">High</button>
         </div>
         <Button
           onClick={addTask}
